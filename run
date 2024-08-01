@@ -1,0 +1,3 @@
+#!/bin/bash
+cd pulsar/
+docker run --rm -it -v ${PWD}:/pwd -v ../beam-me-up-scotty/fuzz/net/traffic pulsar:latest python3 /pwd/pulsar.py $@
