@@ -1,2 +1,2 @@
 #!/bin/bash
-file_list=$(find "/traffic" -maxdepth 1 -type f | paste -sd, -)
+file_list=$(find "$(realpath /traffic)" -maxdepth 1 -type f | paste -sd, -)

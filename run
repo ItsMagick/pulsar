@@ -1,4 +1,3 @@
 #!/bin/bash
-PROJECT_BASE=git rev-parse --show-toplevel
 cd pulsar/
-docker docker run --rm -it -v ${PWD}:/pwd -v $PROJECT_BASE/traffic:/traffic pulsar:latest /home/pulsar/get_traffic_list.sh && python3 -l -p $traffic_list
+docker run --rm -it -v ${PWD}:/pwd -v ../beam-me-up-scotty/fuzz/net/traffic:/traffic pulsar:latest python3 /pwd/pulsar.py $@

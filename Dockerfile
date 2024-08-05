@@ -36,9 +36,6 @@ USER pulsar
 
 RUN cd /home/pulsar && git clone --depth=1 https://github.com/rieck/derrick
 RUN cd /home/pulsar && git clone --depth=1 https://github.com/rieck/sally
-COPY --chown=pulsar:pulsar ./requirements.txt /home/pulsar/requirements.txt
-
-RUN pip3 install --user -r /home/pulsar/requirements.txt
 
 RUN cd /home/pulsar/derrick && \
     ./bootstrap && \
@@ -62,5 +59,5 @@ RUN R -e 'install.packages("PRISMA",lib="/home/pulsar/R/x86_64-pc-linux-gnu-libr
 # RUN cd /home/pulsar && git clone --depth=1 https://github.com/tammok/PRISMA.git pulsar/modules/PRISMA
 # RUN cd /home/pulsar && git clone --depth=1 https://github.com/hgascon/pulsar.git
 # RUN cd /home/pulsar/pulsar && python3 pulsar.py --help
-COPY --chown=pulsar:pulsar ./get_traffic_list.sh /home/pulsar/get_traffic_list.sh
+
 WORKDIR /pwd
