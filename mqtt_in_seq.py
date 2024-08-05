@@ -1,13 +1,12 @@
 import paho.mqtt.client as mqtt
 import time
 import random
-import threading
 
 BROKER = "127.0.0.1"
 PORT = 1883
 TOPICS = ["test/topic1", "test/topic2", "test/topic3", "invalid/topic"]
 QOS_LEVELS = [0, 1, 2]
-RUN_TIME = 15 * 60
+RUN_TIME = 2 * 60
 
 
 def subscriber_client(client_id):
@@ -23,6 +22,7 @@ def subscriber_client(client_id):
     client.loop_start()
     time.sleep(RUN_TIME)
     client.loop_stop()
+    client.disconnect()
 
 
 def publisher_client(client_id):
@@ -133,40 +133,12 @@ def error_condition_client(client_id):
 
 
 if __name__ == "__main__":
-    threads = []
-
-    for i in range(2):
-        t = threading.Thread(target=subscriber_client, args=(f"subscriber-{i}",))
-        threads.append(t)
-        t.start()
-
-    for i in range(2):
-        t = threading.Thread(target=publisher_client, args=(f"publisher-{i}",))
-        threads.append(t)
-        t.start()
-
-    t = threading.Thread(target=retained_message_client, args=("retained-publisher",))
-    threads.append(t)
-    t.start()
-
-    t = threading.Thread(target=will_message_client, args=("will-publisher",))
-    threads.append(t)
-    t.start()
-
-    for i in range(2):
-        t = threading.Thread(target=connect_disconnect_client, args=(f"connect-disconnect-{i}",))
-        threads.append(t)
-        t.start()
-
-    t = threading.Thread(target=large_payload_client, args=("large-payload-publisher",))
-    threads.append(t)
-    t.start()
-
-    t = threading.Thread(target=error_condition_client, args=("error-client",))
-    threads.append(t)
-    t.start()
-
-    for t in threads:
-        t.join()
+    subscriber_client("subscriber-1")
+    publisher_client("publisher-1")
+    retained_message_client("retained-publisher")
+    will_message_client("will-publisher")
+    connect_disconnect_client("connect-disconnect-1")
+    large_payload_client("large-payload-publisher")
+    error_condition_client("error-client")
 
     print("All scenarios completed.")

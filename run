@@ -1,3 +1,6 @@
 #!/bin/bash
+current_dir=$(dirname "$(realpath "$0")")
+parent_dir=$(realpath "$current_dir/..")
+TRAFFIC_DIR=$(realpath "$parent_dir/traffic")
 cd pulsar/
-docker run --rm -it -v ${PWD}:/pwd -v ../beam-me-up-scotty/fuzz/net/traffic:/traffic pulsar:latest python3 /pwd/pulsar.py $@
+docker run --rm -it -v ${PWD}:/pwd -v $TRAFFIC_DIR:/traffic pulsar:latest python3 /pwd/pulsar.py $@
